@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SecureAuth — Dashboard</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <!-- ── Top Navigation Bar ── -->
+  <nav class="navbar">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <span>SecureAuth</span>
+    </div>
+    <button class="btn-logout" onclick="handleLogout()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+      </svg>
+      Logout
+    </button>
+  </nav>
+
+  <!-- ── Main Dashboard Content ── -->
+  <main class="dashboard-main">
+
+    <!-- Success Banner -->
+    <div class="success-banner">
+      <div class="success-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+      </div>
+      <div>
+        <h2>Login Successful!</h2>
+        <p>You have been authenticated securely with MFA.</p>
+      </div>
+    </div>
+
+    <!-- Info Cards Grid -->
+    <div class="cards-grid">
+
+      <!-- User Info Card -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span>User Information</span>
+        </div>
+        <div class="info-card-body">
+          <div class="info-row">
+            <span class="info-label">Email</span>
+            <span class="info-value" id="dash-email">Loading...</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Account Created</span>
+            <span class="info-value" id="dash-created">Loading...</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Status</span>
+            <span class="info-value"><span class="badge-active">● Active</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Security Card -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span>Security Features</span>
+        </div>
+        <div class="info-card-body">
+          <div class="security-item">
+            <span class="check">✓</span>
+            <span>Password hashed with <strong>bcrypt</strong></span>
+          </div>
+          <div class="security-item">
+            <span class="check">✓</span>
+            <span>Session secured with <strong>JWT Token</strong></span>
+          </div>
+          <div class="security-item">
+            <span class="check">✓</span>
+            <span>OTP verified via <strong>Email (MFA)</strong></span>
+          </div>
+          <div class="security-item">
+            <span class="check">✓</span>
+            <span>Routes protected by <strong>Middleware</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Session Card -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>Session Info</span>
+        </div>
+        <div class="info-card-body">
+          <div class="info-row">
+            <span class="info-label">Logged in at</span>
+            <span class="info-value" id="dash-logintime">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Token expires</span>
+            <span class="info-value">in 1 hour</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Auth method</span>
+            <span class="info-value">Email OTP (MFA)</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /cards-grid -->
+
+    <!-- Tech Stack Note -->
+    <div class="tech-note">
+      <strong>Tech Stack:</strong> Node.js + Express &nbsp;·&nbsp; MongoDB + Mongoose &nbsp;·&nbsp; bcrypt &nbsp;·&nbsp; JWT &nbsp;·&nbsp; Nodemailer &nbsp;·&nbsp; Vanilla JS
+    </div>
+
+  </main>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

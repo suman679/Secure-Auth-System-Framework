@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SecureAuth — Login</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Google Fonts: Sora for display, JetBrains Mono for the OTP -->
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- Animated background grid -->
+  <div class="bg-grid"></div>
+
+  <!-- Floating glow orbs for atmosphere -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="page-wrapper">
+    <!-- ── Header ── -->
+    <div class="brand">
+      <div class="brand-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <span>SecureAuth</span>
+    </div>
+
+    <!-- ── Card Container ── -->
+    <div class="card">
+
+      <!-- Tab Switcher -->
+      <div class="tabs">
+        <button class="tab active" id="tab-login" onclick="showTab('login')">Login</button>
+        <button class="tab" id="tab-register" onclick="showTab('register')">Register</button>
+      </div>
+
+      <!-- ════════════ LOGIN FORM ════════════ -->
+      <div id="form-login" class="form-section">
+        <div class="form-header">
+          <h2>Welcome back</h2>
+          <p>Enter your credentials to access your account</p>
+        </div>
+
+        <div class="input-group">
+          <label for="login-email">Email Address</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/><polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email"/>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="login-password">Password</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"/>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="handleLogin()">
+          <span id="login-btn-text">Login & Send OTP</span>
+          <div class="spinner" id="login-spinner" style="display:none;"></div>
+        </button>
+
+        <div id="login-message" class="message" style="display:none;"></div>
+      </div>
+
+      <!-- ════════════ OTP FORM ════════════ -->
+      <div id="form-otp" class="form-section" style="display:none;">
+        <div class="form-header">
+          <h2>Check your email</h2>
+          <p>We sent a 6-digit OTP to <strong id="otp-email-display"></strong></p>
+        </div>
+
+        <div class="otp-wrapper">
+          <input class="otp-input" type="text" maxlength="1" id="otp0" oninput="otpNext(this, 1)" onkeydown="otpBack(event, this, -1)"/>
+          <input class="otp-input" type="text" maxlength="1" id="otp1" oninput="otpNext(this, 2)" onkeydown="otpBack(event, this, 0)"/>
+          <input class="otp-input" type="text" maxlength="1" id="otp2" oninput="otpNext(this, 3)" onkeydown="otpBack(event, this, 1)"/>
+          <input class="otp-input" type="text" maxlength="1" id="otp3" oninput="otpNext(this, 4)" onkeydown="otpBack(event, this, 2)"/>
+          <input class="otp-input" type="text" maxlength="1" id="otp4" oninput="otpNext(this, 5)" onkeydown="otpBack(event, this, 3)"/>
+          <input class="otp-input" type="text" maxlength="1" id="otp5" oninput="otpNext(this, -1)" onkeydown="otpBack(event, this, 4)"/>
+        </div>
+
+        <div class="otp-timer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          OTP expires in <span id="timer-display">05:00</span>
+        </div>
+
+        <button class="btn-primary" onclick="handleVerifyOTP()">
+          <span id="otp-btn-text">Verify OTP</span>
+          <div class="spinner" id="otp-spinner" style="display:none;"></div>
+        </button>
+
+        <button class="btn-ghost" onclick="showTab('login')">← Back to Login</button>
+
+        <div id="otp-message" class="message" style="display:none;"></div>
+      </div>
+
+      <!-- ════════════ REGISTER FORM ════════════ -->
+      <div id="form-register" class="form-section" style="display:none;">
+        <div class="form-header">
+          <h2>Create account</h2>
+          <p>Join SecureAuth to protect your data</p>
+        </div>
+
+        <div class="input-group">
+          <label for="reg-email">Email Address</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/><polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <input type="email" id="reg-email" placeholder="you@example.com"/>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="reg-password">Password</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <input type="password" id="reg-password" placeholder="Min. 6 characters"/>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="reg-confirm">Confirm Password</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <input type="password" id="reg-confirm" placeholder="Re-enter your password"/>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="handleRegister()">
+          <span id="reg-btn-text">Create Account</span>
+          <div class="spinner" id="reg-spinner" style="display:none;"></div>
+        </button>
+
+        <div id="reg-message" class="message" style="display:none;"></div>
+      </div>
+
+    </div><!-- /card -->
+
+    <p class="footer-note">🔒 Passwords are hashed with bcrypt · Sessions secured with JWT</p>
+  </div>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>

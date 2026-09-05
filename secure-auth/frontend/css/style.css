@@ -1,0 +1,524 @@
+/* ==============================================
+   style.css — SecureAuth Dark Theme
+   A clean, modern dark UI for auth flows
+   ============================================== */
+
+/* ── CSS Variables (easy to customize) ── */
+:root {
+  --bg:         #0a0a0f;
+  --surface:    #111118;
+  --surface-2:  #1a1a26;
+  --border:     #ffffff12;
+  --border-2:   #ffffff20;
+  --accent:     #7c6dfa;
+  --accent-2:   #a78bfa;
+  --accent-glow:#7c6dfa40;
+  --success:    #34d399;
+  --error:      #f87171;
+  --warning:    #fbbf24;
+  --text:       #f1f0ff;
+  --text-2:     #9990cc;
+  --text-3:     #5a5580;
+  --font:       'Sora', sans-serif;
+  --mono:       'JetBrains Mono', monospace;
+  --radius:     14px;
+  --transition: 0.2s ease;
+}
+
+/* ── Reset & Base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { height: 100%; }
+
+body {
+  min-height: 100vh;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+/* ── Background Effects ── */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb-1 {
+  width: 400px; height: 400px;
+  background: var(--accent-glow);
+  top: -100px; left: -100px;
+}
+
+.orb-2 {
+  width: 300px; height: 300px;
+  background: #2a1550;
+  bottom: -50px; right: -50px;
+}
+
+/* ── Page Wrapper ── */
+.page-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ── Brand Logo ── */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.brand-icon {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--accent), #4f46e5);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+/* ── Card ── */
+.card {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px var(--border),
+    0 24px 48px #00000080;
+}
+
+/* ── Tabs ── */
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab {
+  padding: 16px;
+  background: none;
+  border: none;
+  color: var(--text-3);
+  font-family: var(--font);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  position: relative;
+}
+
+.tab:hover { color: var(--text-2); }
+
+.tab.active {
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+/* ── Form Sections ── */
+.form-section {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-header h2 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.form-header p {
+  color: var(--text-2);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* ── Input Groups ── */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-2);
+  letter-spacing: 0.02em;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--text-3);
+  pointer-events: none;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 12px 14px 12px 42px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.9rem;
+  outline: none;
+  transition: all var(--transition);
+}
+
+input::placeholder { color: var(--text-3); }
+
+input:focus {
+  border-color: var(--accent);
+  background: #1c1c2e;
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* ── Primary Button ── */
+.btn-primary {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, var(--accent), #4f46e5);
+  border: none;
+  border-radius: var(--radius);
+  color: white;
+  font-family: var(--font);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  letter-spacing: 0.02em;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px var(--accent-glow);
+}
+
+.btn-primary:active { transform: translateY(0); }
+
+/* ── Ghost Button ── */
+.btn-ghost {
+  width: 100%;
+  padding: 10px;
+  background: none;
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius);
+  color: var(--text-2);
+  font-family: var(--font);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent-2);
+}
+
+/* ── Spinner ── */
+.spinner {
+  width: 18px; height: 18px;
+  border: 2px solid #ffffff40;
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Messages ── */
+.message {
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.4;
+  animation: fadeIn 0.25s ease;
+}
+
+.message.success {
+  background: #052e1c;
+  border: 1px solid #065f3a;
+  color: var(--success);
+}
+
+.message.error {
+  background: #2d0a0a;
+  border: 1px solid #7f1d1d;
+  color: var(--error);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── OTP Inputs ── */
+.otp-wrapper {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.otp-input {
+  width: 50px !important;
+  height: 56px;
+  padding: 0 !important;
+  text-align: center;
+  font-family: var(--mono) !important;
+  font-size: 1.4rem !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+}
+
+.otp-timer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+  font-size: 0.82rem;
+  color: var(--text-3);
+}
+
+#timer-display { color: var(--warning); font-weight: 600; font-family: var(--mono); }
+
+/* ── Footer Note ── */
+.footer-note {
+  font-size: 0.75rem;
+  color: var(--text-3);
+  text-align: center;
+}
+
+/* =============================================
+   DASHBOARD STYLES
+   ============================================= */
+
+/* ── Navbar ── */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 60px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+.btn-logout {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #2d0a0a;
+  border: 1px solid #7f1d1d;
+  border-radius: 10px;
+  color: var(--error);
+  font-family: var(--font);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.btn-logout:hover {
+  background: #3d1010;
+  border-color: var(--error);
+}
+
+/* ── Dashboard Main ── */
+.dashboard-main {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 900px;
+  margin: 80px auto 40px;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Success Banner ── */
+.success-banner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: #052e1c;
+  border: 1px solid #065f3a;
+  border-radius: 18px;
+  padding: 22px 24px;
+}
+
+.success-icon {
+  width: 52px; height: 52px;
+  min-width: 52px;
+  background: var(--success);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #052e1c;
+}
+
+.success-banner h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--success);
+  margin-bottom: 4px;
+}
+
+.success-banner p {
+  font-size: 0.85rem;
+  color: #6ee7b7;
+}
+
+/* ── Info Cards Grid ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.info-card {
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.info-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.info-card-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.info-label { color: var(--text-3); }
+
+.info-value {
+  color: var(--text);
+  font-weight: 500;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+
+.badge-active {
+  color: var(--success);
+  font-family: var(--font);
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.security-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: var(--text-2);
+}
+
+.check {
+  color: var(--success);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* ── Tech Note ── */
+.tech-note {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-3);
+  padding: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+/* ── Responsive ── */
+@media (max-width: 500px) {
+  .otp-input { width: 42px !important; height: 48px; }
+  .form-section { padding: 20px; }
+}
